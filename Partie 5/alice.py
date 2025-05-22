@@ -27,8 +27,24 @@ with open("keys/Alice_public.pem", "rb") as f:
 s = socket.socket()
 s.connect(SERVER_ADDR)
 
-# Envoi de la clé publique d’Alice
+# Envoi identité + clé publique
 s.send(json.dumps({"name": NAME, "public_key": pubkey_pem.decode()}).encode())
+
+# Réception du challenge du serveur
+challenge = s.recv(1024)
+
+# Signature avec la clé privée
+signed = privkey.sign(
+    challenge,
+    padding.PSS(
+        mgf=padding.MGF1(hashes.SHA256()),
+        salt_length=padding.PSS.MAX_LENGTH
+    ),
+    hashes.SHA256()
+)
+
+# Envoi de la signature
+s.send(signed)
 
 # Réception de la clé AES chiffrée
 enc_key = s.recv(4096)

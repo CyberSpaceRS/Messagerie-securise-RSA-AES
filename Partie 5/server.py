@@ -22,9 +22,38 @@ def handle_client(conn):
 
     try:
         data = conn.recv(8192)
+        import secrets
+
+        # Étape 1 : réception nom + clé publique
         payload = json.loads(data.decode())
         name = payload["name"]
         pubkey_pem = payload["public_key"].encode()
+        public_key = serialization.load_pem_public_key(pubkey_pem)
+
+        # Étape 2 : envoi d’un challenge aléatoire
+        challenge = secrets.token_hex(16)
+        conn.send(challenge.encode())
+
+        # Étape 3 : réception de la signature du challenge
+        signed = conn.recv(1024)
+
+        # Étape 4 : vérification
+        try:
+            public_key.verify(
+                signed,
+                challenge.encode(),
+                padding.PSS(
+                    mgf=padding.MGF1(hashes.SHA256()),
+                    salt_length=padding.PSS.MAX_LENGTH
+                ),
+                hashes.SHA256()
+            )
+            print(f"[✅] {name} authentifié par signature")
+        except:
+            print(f"[❌] Échec d’authentification pour {name}")
+            conn.close()
+            return
+
         public_key = serialization.load_pem_public_key(pubkey_pem)
         clients[name] = public_key
         print(f"[+] Clé publique enregistrée pour {name} ({len(clients)}/{len(EXPECTED_CLIENTS)})")
