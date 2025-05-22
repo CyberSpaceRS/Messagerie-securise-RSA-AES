@@ -27,7 +27,7 @@ with open("keys/Bob_public.pem", "rb") as f:
 s = socket.socket()
 s.connect(SERVER_ADDR)
 
-# Envoi de la clé publique d’Alice
+# Envoi de la clé publique de Bob
 s.send(json.dumps({"name": NAME, "public_key": pubkey_pem.decode()}).encode())
 
 # Réception de la clé AES chiffrée
