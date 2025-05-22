@@ -107,7 +107,6 @@ Fonctionnalités implémentées :
 * ✅ Signature RSA intégrée
 * ✅ Timestamps (heures d’envoi)
 * ✅ Interface avec avatars
-* ✅ Historique local des messages dans `logs/`
 * ✅ Auto-refresh toutes les 1.5 sec
 
 ---
