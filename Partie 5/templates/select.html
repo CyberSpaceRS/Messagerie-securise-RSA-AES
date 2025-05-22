@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Choisissez votre identité</title>
+  <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1367634625589153882/1374890837057470657/favicon.ico?ex=682fb25f&is=682e60df&hm=cea37700d54a099a0b565c413fea2fa40faba7d0d76a264f00e53121920e1d93&">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #2b2d31;
+      color: #e3e3e3;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+
+    .grid {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background-color: #313338;
+      padding: 20px;
+      border-radius: 12px;
+      width: 180px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background-color: #3c3e44;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+      object-fit: cover;
+      border: 2px solid #555;
+    }
+
+    .name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Qui êtes-vous ?</h1>
+  <div class="grid">
+    <div class="card" onclick="redirectTo('Alice')">
+      <img src="https://media.discordapp.net/attachments/1367634625589153882/1374890792887521321/alice.png?ex=682fb255&is=682e60d5&hm=2609116bc22090cb39b0431a73263229740677769d002b5bec77b827ed393bd7&=&format=webp&quality=lossless" alt="Alice" class="avatar" />
+      <div class="name">Alice</div>
+    </div>
+    <div class="card" onclick="redirectTo('Bob')">
+      <img src="https://media.discordapp.net/attachments/1367634625589153882/1374890807219454042/bob.png?ex=682fb258&is=682e60d8&hm=a6dd97bddbab87942b896e129e6da5a57eb7bd4595cfadac70a9c78c0d45ee3e&=&format=webp&quality=lossless" alt="Bob" class="avatar" />
+      <div class="name">Bob</div>
+    </div>
+    <div class="card" onclick="redirectTo('Tristan')">
+      <img src="https://media.discordapp.net/attachments/1367634625589153882/1374890821781819432/tristan.png?ex=682fb25c&is=682e60dc&hm=a5bfe877303d442ec124c949a38ca4bc3e29c8207af5c3a179931f10b7848251&=&format=webp&quality=lossless" alt="Tristan" class="avatar" />
+      <div class="name">Tristan</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const userPorts = {
+    "Alice": 8501,
+    "Bob": 8502,
+    "Tristan": 8503
+  };
+
+  function redirectTo(user) {
+    const port = userPorts[user];
+    window.location.href = `http://localhost:${port}/`;
+  }
+</script>
+
+</body>
+</html>
